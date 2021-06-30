@@ -64,9 +64,9 @@ blogs = [
 5. Find a document using \_id field.
 > db.articles.find({_id: 'random1'})
 6. 1. Find documents using title
-> db.articles.find({title: 'blog2'})
+> db.articles.findOne({title: 'blog2'})
 7. 2. Find documents using author's name field.
-> db.articles.find({'author.name' :'name3'})
+> db.articles.findOne({'author.name' :'name3'})
 8. Find document using a specific tag.
 > db.articles.find({tags:'css'})
 9. Update title of a document using its \_id field.
@@ -74,8 +74,8 @@ blogs = [
 10. Update a author's name using article's title.
 >  db.articles.update({'author.name':'name2'},{$set:{'author.name':'unknown'}})
 11. rename details field to description from all articles in articles collection.
-> db.articles.updateMany({},{$rename: {'details':'description'}})
-12. Add additional tag in a specific document.
+> db.articles.updateMany({},{$rename: {'details':'description'}}, {multi:true})
+12. Add additional tag in a specific document.  
 > db.articles.update({title:'blog2'},{$push:{tags:'java'}})
 13. Update an article's title using $set and without $set.
 db.articles.update({_id:'random2'},{title:'blog22'});
@@ -203,7 +203,7 @@ db.users.insertMany([
 Insert above data into database to perform below queries:-
 
 - Find all males who play cricket.
-> db.users.find({gender:'Male'},{sports:'cricket'})
+> db.users.find({gender:'Male' ,sports:'cricket'})
 - Update user with extra golf field in sports array whose name is "Steve Ortega".
 > db.users.update({name:'Steve Ortega'},{$push:{sports:'golf'}})
 - Find all users who play either 'football' or 'cricket'.
