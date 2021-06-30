@@ -3,9 +3,10 @@ writeCode
 Write code to execute below expressions.
 
 1. Create a database named `blog`.
+> use blog
 2. Create a collection called 'articles'.
+> db.createCollection('articles')
 3. Insert multiple documents(at least 3) into articles. It should have fields
-
 - title as string
 - createdAt as date
 - details as String
@@ -19,38 +20,72 @@ Write code to execute below expressions.
 
 ```js
 // An article should look like in the database
-{
-  _id: 'some_random_id',
-  title: '',
-  details: '',
+blogs = [
+  {
+  _id:'random1',
+  title: 'blog1',
+  createdAt: new Date(),
+  details: 'This is blog1',
   author: {
-    name: '',
-    email: '',
-    age: ''
+    name: 'name1',
+    email: 'email1@gmail.com',
+    age: 44
   },
   tags: ['js', 'mongo']
+},
+{
+  _id:'random2',
+  title: 'blog2',
+  createdAt: new Date(),
+  details: 'This is blog2',
+  author: {
+    name: 'name2',
+    email: 'email2@gmail.com',
+    age: 44
+  },
+  tags: ['html', 'css']
+},
+ {
+  _id:'random3',
+  title: 'blog3',
+  createdAt: new Date(),
+  details: 'This is blog3',
+  author: {
+    name: 'name3',
+    email: 'email3@gmail.com',
+    age: 45
+  },
+  tags: ['html', 'css','mongodb']
 }
+]
 ```
-
+> db.articles.insertMany(blogs)
 4. Find all the articles using `db.COLLECTION_NAME.find()`
 5. Find a document using \_id field.
+> db.articles.find({_id: 'random1'})
 6. 1. Find documents using title
+> db.articles.find({title: 'blog2'})
 7. 2. Find documents using author's name field.
+> db.articles.find({'author.name' :'name3'})
 8. Find document using a specific tag.
-
+> db.articles.find({tags:'css'})
 9. Update title of a document using its \_id field.
+> db.articles.update({_id:'random1'},{title:'blog0'})
 10. Update a author's name using article's title.
+>  db.articles.update({'author.name':'name2'},{$set:{'author.name':'unknown'}})
 11. rename details field to description from all articles in articles collection.
+> db.articles.updateMany({},{$rename: {'details':'description'}})
 12. Add additional tag in a specific document.
-
+> db.articles.update({title:'blog2'},{$push:{tags:'java'}})
 13. Update an article's title using $set and without $set.
-
+db.articles.update({_id:'random2'},{title:'blog22'});
+db.articles.update({_id:'random2'},{$set: {title:'blog22'}})
 - Write the differences here ?
-
+with $set only specified field gets update, without $set rest all of the field gets removed
 13. find an article using title and increment it's auhtor's age by 5.
-
+db.articles.update({title:'blog3'},{$inc:{'author.age':5}})
 14. Delete a document using \_id field with `db.COLLECTION_NAME.remove()`.
-
+> db.articles.remove({_id:"random1"})
 // Sample data
 
 ```js
@@ -168,6 +203,10 @@ db.users.insertMany([
 Insert above data into database to perform below queries:-
 
 - Find all males who play cricket.
+> db.users.find({gender:'Male'},{sports:'cricket'})
 - Update user with extra golf field in sports array whose name is "Steve Ortega".
+> db.users.update({name:'Steve Ortega'},{$push:{sports:'golf'}})
 - Find all users who play either 'football' or 'cricket'.
+>  db.users.find({sports:{$in:['football','cricket']}}).count()
 - Find all users whose name includes 'ri' in their name.
+> 
