@@ -3,7 +3,10 @@ writeCode
 Write command to
 
 - List collections from a database.
+> show collections
 - create a new collection in your country database which you created recently.
+> use country
+> db.createCollection('COLLECTION_NAME ')
 
 Write code to:-
 
